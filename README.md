@@ -33,7 +33,7 @@ Die Teile der Hand liegen als 3MF-Dateien im Ordner [`3d/`](3d):
 | `handgeruest.3mf` | Handgerüst |
 | `servo-aufsatz.3mf` | Aufsatz für die Servos |
 | `kabelhalter.3mf` | Kabelhalter |
-| `verbindungsstuecke_14-10-6.3mf` | Verbindungsstücke, mit denen die Finger zusammengesetzt werden |
+| `verbindungsstuecke_14-10-6mm.3mf` | Verbindungsstücke in 14, 10 und 6 mm Länge, mit denen die Finger zusammengesetzt werden |
 
 Gedruckt aus ABS+ (Prototypen aus PLA).
 
