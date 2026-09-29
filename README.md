@@ -23,6 +23,20 @@ gesteuert allein über eine Laptopkamera, ohne Handschuh und ohne Sensoren am K�
 - ESP32 mit MicroPython
 - Roboterhand mit 6 Servos (MG90S)
 
+## 3D-Druck
+
+Die Teile der Hand liegen als 3MF-Dateien im Ordner [`3d/`](3d):
+
+| Datei | Teil |
+|---|---|
+| `finger.3mf` | Finger mit Fingergliedern |
+| `handgeruest.3mf` | Handgerüst |
+| `servo-aufsatz.3mf` | Aufsatz für die Servos |
+| `kabelhalter.3mf` | Kabelhalter |
+| `verbindungsstuecke_14-10-6.3mf` | Verbindungsstücke, mit denen die Finger zusammengesetzt werden |
+
+Gedruckt aus ABS+ (Prototypen aus PLA).
+
 ## Installation
 
 ```bash
