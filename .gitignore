@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.DS_Store
+.venv/
+
+# Tests und lokale Werkzeug-Einstellungen -- bleiben lokal, nicht auf GitHub
+robot_hand/test.py
+robot_hand/test_servo.py
+CLAUDE.md
+.claude/
+.vscode/
+.obsidian/
+.ua/
+
+# Messprogramme und Messdaten -- bleiben lokal, nicht auf GitHub
+Messungen/
