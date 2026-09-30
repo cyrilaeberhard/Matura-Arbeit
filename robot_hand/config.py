@@ -41,18 +41,15 @@ MAX_WINKEL = 120  # maximaler Servo-Winkel bei ganz ausgestrecktem Finger
 # Verhältnis dist(Spitze 4, CMC 1) / dist(Grundgelenk 2, CMC 1). Da CMC viel
 # näher an den Daumengelenken liegt als das Handgelenk, ist dieser Wertebereich
 # deutlich anders als MIN_VERHAELTNIS/MAX_VERHAELTNIS oben.
-# Noch nicht kalibriert -- mit test.py die Rohwerte ausgeben lassen (Daumen
-# einmal ganz strecken, einmal ganz einklappen) und anpassen.
+# Aus aufgenommenen Rohwerten bestimmt, danach von Auge verbessert.
 DAUMEN_MIN_VERHAELTNIS = 1.8
 DAUMEN_MAX_VERHAELTNIS = 2.4
 
 # --- Kalibrierung Daumen-CMC-Gelenk (Einklappen über die Handfläche) ---
 # Verhältnis (Daumenspitze<->Kleinfinger-Grundgelenk) / Handbreite.
-# CMC_MIN_VERHAELTNIS: Daumen voll über die Handfläche eingeklappt (Wert mit
-#   test.py ermitteln: Daumen ganz zum kleinen Finger hin einklappen).
+# CMC_MIN_VERHAELTNIS: Daumen voll über die Handfläche eingeklappt.
 # CMC_MAX_VERHAELTNIS: Daumen in normaler Ruheposition/gestreckt.
-# Noch nicht kalibriert -- mit test.py die Rohwerte ausgeben lassen und
-# anpassen.
+# Aus aufgenommenen Rohwerten bestimmt, danach von Auge verbessert.
 CMC_MIN_VERHAELTNIS = 0.3
 CMC_MAX_VERHAELTNIS = 1.3
 
