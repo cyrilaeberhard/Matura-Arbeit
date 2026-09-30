@@ -7,28 +7,22 @@ def abstand(p1, p2):
     return ((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2) ** 0.5
 
 
-def daumen_cmc_winkel_berechnen(hand_landmark_liste):
-
+def daumen_cmc_verhaeltnis(hand_landmark_liste):
     daumenspitze = hand_landmark_liste[4]
     kleinfinger_grund = hand_landmark_liste[17]
     zeigefinger_grund = hand_landmark_liste[5]
 
     handbreite = abstand(zeigefinger_grund, kleinfinger_grund)
     if handbreite == 0:
-        return 0
+        return config.CMC_MAX_VERHAELTNIS  # ergibt 0°, wie bisher
 
-    verhaeltnis = abstand(daumenspitze, kleinfinger_grund) / handbreite
-
-    normiert = (config.CMC_MAX_VERHAELTNIS - verhaeltnis) / (config.CMC_MAX_VERHAELTNIS - config.CMC_MIN_VERHAELTNIS)
-    normiert = max(0.0, min(1.0, normiert))
-
-    return int(normiert * config.MAX_WINKEL)
+    return abstand(daumenspitze, kleinfinger_grund) / handbreite
 
 
-def finger_winkel_berechnen(hand_landmark_liste):
-    """Gibt 6 Winkel zurück: Daumen, Zeige, Mittel, Ring, Klein, Daumen-CMC."""
+def verhaeltnisse_berechnen(hand_landmark_liste):
+    """Gibt die 6 rohen Distanzverhältnisse zurück: Daumen, Zeige, Mittel, Ring, Klein, Daumen-CMC."""
     handgelenk = hand_landmark_liste[0]
-    winkel_liste = []
+    verhaeltnisse = []
 
     for finger_nr in range(1, 6):
         indexe = config.FINGER_INDEXE[finger_nr]
@@ -45,21 +39,29 @@ def finger_winkel_berechnen(hand_landmark_liste):
         abstand_spitze = abstand(bezugspunkt, spitze)
 
         if abstand_grund == 0:
-            verhaeltnis = 1.0
+            verhaeltnisse.append(1.0)
         else:
-            verhaeltnis = abstand_spitze / abstand_grund
+            verhaeltnisse.append(abstand_spitze / abstand_grund)
 
-        if finger_nr == 1:
-            min_verhaeltnis, max_verhaeltnis = config.DAUMEN_MIN_VERHAELTNIS, config.DAUMEN_MAX_VERHAELTNIS
-        else:
-            min_verhaeltnis, max_verhaeltnis = config.MIN_VERHAELTNIS, config.MAX_VERHAELTNIS
+    verhaeltnisse.append(daumen_cmc_verhaeltnis(hand_landmark_liste))
+    return verhaeltnisse
 
+
+def finger_winkel_berechnen(hand_landmark_liste):
+    """Gibt 6 Winkel zurück: Daumen, Zeige, Mittel, Ring, Klein, Daumen-CMC."""
+    grenzen = [(config.DAUMEN_MIN_VERHAELTNIS, config.DAUMEN_MAX_VERHAELTNIS)]
+    grenzen += [(config.MIN_VERHAELTNIS, config.MAX_VERHAELTNIS)] * 4
+    verhaeltnisse = verhaeltnisse_berechnen(hand_landmark_liste)
+    winkel_liste = []
+
+    for verhaeltnis, (min_verhaeltnis, max_verhaeltnis) in zip(verhaeltnisse, grenzen):
         normiert = (verhaeltnis - min_verhaeltnis) / (max_verhaeltnis - min_verhaeltnis)
         normiert = max(0.0, min(1.0, normiert))
-
         winkel_liste.append(int(normiert * config.MAX_WINKEL))
 
-    winkel_liste.append(daumen_cmc_winkel_berechnen(hand_landmark_liste))
+    # CMC umgekehrt: kleines Verhältnis = Daumen eingeklappt = grosser Winkel
+    normiert = (config.CMC_MAX_VERHAELTNIS - verhaeltnisse[5]) / (config.CMC_MAX_VERHAELTNIS - config.CMC_MIN_VERHAELTNIS)
+    winkel_liste.append(int(max(0.0, min(1.0, normiert)) * config.MAX_WINKEL))
 
     return winkel_liste
 
