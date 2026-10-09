@@ -1,0 +1,5 @@
+# mediapipe 1.0.1 stürzt auf macOS beim Start ab (Metal "Service is unavailable") -> auf 1.0.0 fixiert
+mediapipe==1.0.0
+opencv-python==5.0.0.93
+numpy==2.5.3
+pyserial==3.5
